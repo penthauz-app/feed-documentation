@@ -1,0 +1,458 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://penthauz.app/feed"
+           xmlns="http://penthauz.app/feed"
+           elementFormDefault="qualified">
+
+	<xs:element name="feed">
+	    <xs:complexType>
+	      	<xs:sequence>
+	        	<xs:element name="row" type="Row" minOccurs="0" maxOccurs="unbounded"/>
+	      	</xs:sequence>
+	      	<xs:attribute name="version" type="xs:string" use="required"/>
+	    </xs:complexType>
+	</xs:element>
+
+	<!-- Single object row -->
+	<xs:complexType name="Row">
+		<xs:all>
+			<!-- Unique ID of object in client's database -->
+			<xs:element name="sku" type="xs:string"/>
+			<!-- Category must be "new-buildings" for new buildings -->
+			<xs:element name="category">
+				<xs:simpleType>
+				    <xs:restriction base="xs:string">
+				      	<xs:enumeration value="new-buildings"/>
+				    </xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- Define if apartment or house -->
+			<xs:element name="sub-category">
+				<xs:simpleType>
+				    <xs:restriction base="xs:string">
+				      	<xs:enumeration value="apartment"/>
+				      	<xs:enumeration value="house"/>
+				    </xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="title" type="xs:string"/>
+      		<xs:element name="description" type="xs:string" minOccurs="0"/>
+      		<xs:element name="images" minOccurs="0">
+      			<xs:complexType>
+					<xs:sequence>
+				      	<xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				    </xs:sequence>
+				</xs:complexType>
+      		</xs:element>
+      		<!-- Reference to apartment complex based on unique ID of object in client's database -->
+      		<xs:element name="apartment-complex" type="xs:string" minOccurs="0"/>
+      		<xs:element name="location">
+      			<xs:complexType>
+					<xs:all>
+				      	<xs:element name="latitude" type="xs:decimal"/>
+				      	<xs:element name="longitude" type="xs:decimal"/>
+				      	<xs:element name="address" type="xs:string"/>
+
+				      	<!-- if "true" the object will have precise point on the map -->
+			      		<xs:element name="precise-location" type="xs:boolean"/>
+				    </xs:all>
+				</xs:complexType>
+			</xs:element>
+      		<xs:element name="deal" type="Deal"/>
+      		<xs:element name="object" type="Object"/>
+      		<xs:element name="building" type="Building"/>
+      		<xs:element name="facilities" type="Facilities"/>
+      		<xs:element name="promotions" type="Promotions"/>
+      		<!-- Контактное лицо -->
+      		<xs:element name="contact" type="Contact" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+	<!-- Deal -->
+
+	<xs:complexType name="Deal">
+		<xs:all>
+			<!-- Price in UZS -->
+			<xs:element name="price" 			type="xs:integer"/>
+			<!-- Тип сделки -->
+	      	<xs:element name="new-deal-status" 	type="DealStatus" minOccurs="0"/>
+	      	<!-- Доступна ипотека -->
+	      	<xs:element name="mortgage" 		type="xs:boolean" minOccurs="0"/>
+	      	<!-- Скидка -->
+	      	<xs:element name="discount" 		type="xs:boolean" minOccurs="0"/>
+	      	<!-- Возможен торг -->
+	      	<xs:element name="haggle" 			type="xs:boolean" minOccurs="0"/>
+	    </xs:all>
+	</xs:complexType>
+
+	<xs:simpleType name="DealStatus">
+	    <xs:restriction base="xs:string">
+	    	<!-- Первичная продажа -->
+	      	<xs:enumeration value="primary"/>
+	      	<!-- Прямая продажа -->
+	      	<xs:enumeration value="direct"/>
+	      	<!-- Переуступка -->
+	      	<xs:enumeration value="reassignment"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- Object -->
+
+	<xs:complexType name="Object">
+		<xs:all>
+			<!-- common -->
+			<!-- Кол-во комнат -->
+	      	<xs:element name="rooms" 					type="ObjectRooms"/>
+	      	<!-- Общая площадь -->
+	      	<xs:element name="total-space" 				type="xs:decimal"/>
+	      	<!-- Площадь кухни -->
+	      	<xs:element name="kitchen-space" 			type="xs:decimal" minOccurs="0"/>
+	      	<!-- Ремонт -->
+	      	<xs:element name="new-renovation" 			type="ObjectRenovation"/>
+	      	<!-- Санузел -->
+	      	<xs:element name="bathroom" 				type="ObjectBathroom"/>
+	      	<!-- Балкон -->
+	      	<xs:element name="balcony" 					type="ObjectBalcony" minOccurs="0"/>
+
+	      	<!-- only for sub-category == "apartment" -->
+	      	<xs:element name="apartment" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+	        			<!-- Этаж --> 
+			      		<xs:element name="apartment-floor" 			type="xs:integer"/>
+			      		<!-- Вид из окон -->
+	      				<xs:element name="apartment-window-view"	type="ObjectApartmentWindowView" minOccurs="0"/>
+			      	</xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+
+	      	<!-- only for sub-category == "house" -->
+	      	<xs:element name="house" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+	        			<!-- Количество этажей -->
+			      		<xs:element name="house-floors-count" 		type="xs:integer"/>
+			      		<!-- Площадь участка -->
+	      				<xs:element name="house-lot-space" 			type="xs:decimal"/>
+			      	</xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+	    </xs:all>
+	</xs:complexType>
+
+	<xs:simpleType name="ObjectRooms">
+	    <xs:restriction base="xs:string">
+	      	<xs:enumeration value="1"/>
+	      	<xs:enumeration value="2"/>
+	      	<xs:enumeration value="3"/>
+	      	<xs:enumeration value="4"/>
+	      	<xs:enumeration value="5-and-more"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ObjectRenovation">
+	    <xs:restriction base="xs:string">
+	    	<!-- Чистовая отделка -->
+	      	<xs:enumeration value="fine"/>
+	      	<!-- Под ключ -->
+	      	<xs:enumeration value="turnkey"/>
+	      	<!-- Черновая отделка -->
+	      	<xs:enumeration value="rough"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ObjectBathroom">
+	    <xs:restriction base="xs:string">
+	    	<!-- Совмещенный -->
+	      	<xs:enumeration value="combined"/>
+	      	<!-- Раздельный -->
+	      	<xs:enumeration value="separated"/>
+	      	<xs:enumeration value="2"/>
+	      	<xs:enumeration value="3"/>
+	      	<xs:enumeration value="4-and-more"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ObjectBalcony">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+			      	<xs:enumeration value="balcony"/>
+			      	<xs:enumeration value="loggia"/>
+			      	<xs:enumeration value="terrace"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<xs:simpleType name="ObjectApartmentWindowView">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+	    			<!-- Во двор -->
+			      	<xs:enumeration value="courtyard"/>
+			      	<!-- На улицу -->
+			      	<xs:enumeration value="street"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<!-- Building -->
+
+	<xs:complexType name="Building">
+		<xs:all>
+			<!-- common -->
+			<!-- Класс жилья -->
+	      	<xs:element name="housing-class" 			type="BuildingHousingClass"/>
+	      	<!-- Высота потолков -->
+	      	<xs:element name="ceiling-height" 			type="xs:decimal"/>
+	      	<!-- Стадия строительства -->
+	      	<xs:element name="building-state" 			type="BuildingState"/>
+	      	<!-- Год постройки -->
+	      	<xs:element name="built-date" 				type="xs:integer"/>
+	      	<!-- Квартал сдачи -->
+	      	<xs:element name="built-quarter"			type="BuildingBuiltQuarter" minOccurs="0"/>
+
+	      	<!-- only for sub-category == "house" -->
+	      	<xs:element name="house" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+			      		<xs:element name="house-type" 			type="BuildingHouseType"/>
+	      				<xs:element name="house-building-type" 	type="BuildingHouseBuildingType" minOccurs="0"/>
+			      	</xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+
+	      	<!-- only for sub-category == "apartment" -->
+	      	<xs:element name="apartment" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+			      		<xs:element name="apartment-building-type" 	type="BuildingApartmentBuildingType" minOccurs="0"/>
+			      		<!-- Количество этажей -->
+			      		<xs:element name="apartment-floors-total" 	type="xs:decimal"/>
+			      	</xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+	    </xs:all>
+	</xs:complexType>
+
+	<xs:simpleType name="BuildingHousingClass">
+	    <xs:restriction base="xs:string">
+	      	<xs:enumeration value="economy"/>
+	      	<xs:enumeration value="comfort"/>
+	      	<xs:enumeration value="comfort-plus"/>
+	      	<xs:enumeration value="business"/>
+	      	<xs:enumeration value="elite"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BuildingHouseType">
+	    <xs:restriction base="xs:string">
+	    	<!-- Отдельный дом -->
+	      	<xs:enumeration value="full"/>
+	      	<!-- Часть дома -->
+	      	<xs:enumeration value="partial"/>
+	      	<!-- Таунхаус -->
+	      	<xs:enumeration value="townhouse"/>
+	      	<!-- Дуплекс -->
+	      	<xs:enumeration value="duplex"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BuildingApartmentBuildingType">
+	    <xs:restriction base="xs:string">
+	      	<xs:enumeration value="brick"/>
+	      	<xs:enumeration value="monolith"/>
+	      	<xs:enumeration value="pane"/>
+	      	<xs:enumeration value="brick-monolith"/>
+	      	<xs:enumeration value="concrete"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BuildingHouseBuildingType">
+	    <xs:restriction base="xs:string">
+	      	<xs:enumeration value="brick"/>
+	      	<xs:enumeration value="monolith"/>
+	      	<xs:enumeration value="pane"/>
+	      	<xs:enumeration value="brick-monolith"/>
+	      	<xs:enumeration value="concrete"/>
+	      	<xs:enumeration value="reinforced-concrete"/>
+	      	<xs:enumeration value="stone"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BuildingState">
+	    <xs:restriction base="xs:string">
+	    	<!-- Дом построен, но не сдан -->
+	      	<xs:enumeration value="built"/>
+	      	<!-- Сдан в эксплуатацию -->
+	      	<xs:enumeration value="hand-over"/>
+	      	<!-- Строится -->
+	      	<xs:enumeration value="unfinished"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BuildingBuiltQuarter">
+	    <xs:restriction base="xs:string">
+	      	<xs:enumeration value="1"/>
+	      	<xs:enumeration value="2"/>
+	      	<xs:enumeration value="3"/>
+	      	<xs:enumeration value="4"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- Facilities -->
+
+	<xs:complexType name="Facilities">
+	    <xs:all>
+	    	<!-- common -->
+	    	<!-- Рядом -->
+	        <xs:element name="nearby" type="FacilitiesNearby" minOccurs="0"/>
+
+	        <!-- only for sub-category == "apartment" -->
+	        <xs:element name="apartment" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+	        			<!-- Парковка -->
+			            <xs:element name="apartment-parking" type="FacilitiesApartmentParking"/>
+			            <!-- Удобства -->
+			            <xs:element name="apartment-facilities" type="FacilitiesApartmentFacilities"/>
+			        </xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+
+	        <!-- only for sub-category == "house" -->
+	        <xs:element name="house" minOccurs="0">
+	        	<xs:complexType>
+	        		<xs:all>
+	        			<!-- Парковка -->
+			            <xs:element name="house-parking" type="FacilitiesHouseParking"/>
+			            <!-- Инфраструктура -->
+			            <xs:element name="house-supply" type="FacilitiesHouseSupply"/>
+			            <!-- Удобства -->
+			            <xs:element name="house-facilities" type="FacilitiesHouseFacilities"/>
+			        </xs:all>
+	        	</xs:complexType>
+	        </xs:element>
+	    </xs:all>
+	</xs:complexType>
+
+
+	<xs:simpleType name="FacilitiesApartmentParking">
+	    <xs:restriction base="xs:string">
+	    	<!-- Закрытая -->
+	      	<xs:enumeration value="closed"/>
+	      	<!-- Открытая -->
+	      	<xs:enumeration value="open"/>
+	      	<!-- Подземная -->
+	      	<xs:enumeration value="underground"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilitiesHouseParking">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+	    			<!-- Гараж -->
+			      	<xs:enumeration value="garage"/>
+			      	<!-- Место перед домом -->
+			      	<xs:enumeration value="parking-slot"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilitiesHouseSupply">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+			      	<xs:enumeration value="electricity"/>
+			      	<xs:enumeration value="gas"/>
+			      	<xs:enumeration value="sewerage"/>
+			      	<xs:enumeration value="heating"/>
+			      	<xs:enumeration value="water"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilitiesApartmentFacilities">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+			      	<xs:enumeration value="internet"/>
+			      	<xs:enumeration value="elevator"/>
+			      	<xs:enumeration value="service-elevator"/>
+			      	<xs:enumeration value="garbage-chute"/>
+			      	<xs:enumeration value="concierge"/>
+			      	<xs:enumeration value="closed-area"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilitiesHouseFacilities">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+			      	<xs:enumeration value="billiards"/>
+			      	<xs:enumeration value="sauna"/>
+			      	<xs:enumeration value="pool"/>
+			      	<xs:enumeration value="kitchen"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilitiesNearby">
+	    <xs:list>
+	    	<xs:simpleType>
+	    		<xs:restriction base="xs:string">
+			      	<xs:enumeration value="park"/>
+			      	<xs:enumeration value="water"/>
+			      	<xs:enumeration value="metro-station"/>
+			      	<xs:enumeration value="shopping-mall"/>
+			      	<xs:enumeration value="fitness"/>
+			      	<xs:enumeration value="playground"/>
+			      	<xs:enumeration value="restaurants"/>
+			      	<xs:enumeration value="shops"/>
+			      	<xs:enumeration value="kindergarten"/>
+			      	<xs:enumeration value="school"/>
+			      	<xs:enumeration value="public-transport"/>
+			    </xs:restriction>
+	    	</xs:simpleType>
+	    </xs:list>
+	</xs:simpleType>
+
+	<!-- Promotions -->
+
+	<xs:complexType name="Promotions">
+		<xs:all>
+			<xs:element name="promotion-installment" 		type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-trade-in" 			type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-parental-capital" 	type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-start-of-sales" 	type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-key-issue" 			type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-new-building" 		type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-cash-back" 			type="xs:boolean" minOccurs="0"/>
+			<xs:element name="promotion-special-prices" 	type="xs:boolean" minOccurs="0"/>
+	    </xs:all>
+	</xs:complexType>
+
+
+	<!-- Contact -->
+
+	<xs:complexType name="Contact">
+		<xs:all>
+			<!-- Unique ID of person in client's database or CRM -->
+			<xs:element name="contact-sku" 			type="xs:string" minOccurs="0"/>
+			<xs:element name="contact-name" 		type="xs:string" minOccurs="0"/>
+			<xs:element name="contact-phone" 		type="xs:string" minOccurs="0"/>
+			<xs:element name="contact-telegram" 	type="xs:string" minOccurs="0"/>
+	    </xs:all>
+	</xs:complexType>
+
+</xs:schema>

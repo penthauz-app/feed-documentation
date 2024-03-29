@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<feed xmlns="http://penthauz.app/feed" version="1.0">
+    <row>
+        <sku>Complex001</sku>
+        <title>Luxury Apartments Downtown</title>
+        <description><![CDATA[A luxurious apartment complex offering modern amenities and stunning city views.]]></description>
+        <logo>
+            <url>https://example.com/complex001_logo.jpg</url>
+        </logo>
+        <images>
+            <url>https://example.com/complex001_image1.jpg</url>
+            <url>https://example.com/complex001_image2.jpg</url>
+            <url>https://example.com/complex001_image3.jpg</url>
+        </images>
+        <location>
+            <latitude>40.7128</latitude>
+            <longitude>-74.0060</longitude>
+            <address>123 Main St, CityA</address>
+            <precise-location>true</precise-location>
+        </location>
+    </row>
+    <row>
+        <sku>Complex002</sku>
+        <title>Central Park Residences</title>
+        <description><![CDATA[Exclusive apartments near Central Park, featuring luxury amenities and breathtaking views.]]></description>
+        <logo>
+            <url>https://example.com/complex002_logo.jpg</url>
+        </logo>
+        <images>
+            <url>https://example.com/complex002_image1.jpg</url>
+            <url>https://example.com/complex002_image2.jpg</url>
+            <url>https://example.com/complex002_image3.jpg</url>
+        </images>
+        <location>
+            <latitude>40.7851</latitude>
+            <longitude>-73.9683</longitude>
+            <address>456 Park Ave, CityB</address>
+            <precise-location>true</precise-location>
+        </location>
+    </row>
+    <row>
+        <sku>Complex003</sku>
+        <title>Seaside Towers</title>
+        <description><![CDATA[Oceanfront luxury apartments with stunning views of the sea. Enjoy resort-style living at Seaside Towers.]]></description>
+        <logo>
+            <url>https://example.com/complex003_logo.jpg</url>
+        </logo>
+        <images>
+            <url>https://example.com/complex003_image1.jpg</url>
+            <url>https://example.com/complex003_image2.jpg</url>
+            <url>https://example.com/complex003_image3.jpg</url>
+        </images>
+        <location>
+            <latitude>34.0522</latitude>
+            <longitude>-118.2437</longitude>
+            <address>789 Ocean Blvd, CityC</address>
+            <precise-location>true</precise-location>
+        </location>
+    </row>
+</feed>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://penthauz.app/feed"
+           xmlns="http://penthauz.app/feed"
+           elementFormDefault="qualified">
+
+	<xs:element name="feed">
+	    <xs:complexType>
+	      	<xs:sequence>
+	        	<xs:element name="row" type="row" minOccurs="0" maxOccurs="unbounded"/>
+	      	</xs:sequence>
+	      	<xs:attribute name="version" type="xs:string" use="required"/>
+	    </xs:complexType>
+	</xs:element>
+	
+	<!-- Single object row -->
+	<xs:complexType name="row">
+		<xs:all>
+			<!-- Unique ID of apartment complex in client's database -->
+			<xs:element name="sku" type="xs:string"/>
+			<!-- Title or name of apartment complex -->
+      		<xs:element name="title" type="xs:string"/>
+      		<!-- CDATA, without links, phone numbers and HTML. MARKDOWN is supported -->
+      		<xs:element name="description" type="xs:string" minOccurs="0"/>
+      		<!-- Logo of apartment complex -->
+      		<xs:element name="logo" minOccurs="0">
+      			<xs:complexType>
+					<xs:sequence>
+				      	<xs:element name="url" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				    </xs:sequence>
+				</xs:complexType>
+      		</xs:element>
+      		<!-- List of apartment complex images -->
+      		<xs:element name="images" minOccurs="0">
+      			<xs:complexType>
+					<xs:sequence>
+				      	<xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				    </xs:sequence>
+				</xs:complexType>
+      		</xs:element>
+      		<!-- Apartment complex location -->
+      		<xs:element name="location">
+      			<xs:complexType>
+					<xs:all>
+				      	<xs:element name="latitude" type="xs:decimal"/>
+				      	<xs:element name="longitude" type="xs:decimal"/>
+				      	<!-- Physical address -->
+				      	<xs:element name="address" type="xs:string"/>
+				      	<!-- if "true" the object will have precise point on the map -->
+			      		<xs:element name="precise-location" type="xs:boolean" default="true"/>
+				    </xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
