@@ -14,9 +14,9 @@
 
 ```
 <feed xmlns="http://penthauz.app/feed" version="1.0">
-	<row>... object 1 ... </row>
-	<row>... object 2 ... </row>
-	...
+    <row>... object 1 ... </row>
+    <row>... object 2 ... </row>
+    ...
 </feed>
 ```
 
@@ -41,11 +41,11 @@
 ```
 <!-- Определение в схеме -->
 <xs:element name="images" minOccurs="0">
-	<xs:complexType>
-		<xs:sequence>
-	    	<xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-	    </xs:sequence>
-	</xs:complexType>
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:element>
 
 <!-- Значение в XML-файле -->
@@ -99,9 +99,9 @@
 <!-- Определение в схеме -->
 <xs:simpleType name="ObjectRenovation">
     <xs:restriction base="xs:string">
-    	<xs:enumeration value="fine"/>
-      	<xs:enumeration value="turnkey"/>
-      	<xs:enumeration value="rough"/>
+        <xs:enumeration value="fine"/>
+        <xs:enumeration value="turnkey"/>
+        <xs:enumeration value="rough"/>
     </xs:restriction>
 </xs:simpleType>
 
@@ -119,13 +119,13 @@
 <!-- Определение в схеме -->
 <xs:simpleType name="ObjectBalcony">
     <xs:list>
-    	<xs:simpleType>
-    		<xs:restriction base="xs:string">
-		      	<xs:enumeration value="balcony"/>
-		      	<xs:enumeration value="loggia"/>
-		      	<xs:enumeration value="terrace"/>
-		    </xs:restriction>
-    	</xs:simpleType>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                  <xs:enumeration value="balcony"/>
+                  <xs:enumeration value="loggia"/>
+                  <xs:enumeration value="terrace"/>
+            </xs:restriction>
+        </xs:simpleType>
     </xs:list>
 </xs:simpleType>
 
@@ -157,12 +157,12 @@
 
 ```
 <xs:element name="apartment" minOccurs="0">
-	<xs:complexType>
-		<xs:all>
-			<xs:element name="apartment-floor" type="xs:integer"/>
-      		<xs:element name="apartment-window-view" type="ObjectApartmentWindowView" minOccurs="0"/>
-      	</xs:all>
-	</xs:complexType>
+    <xs:complexType>
+        <xs:all>
+            <xs:element name="apartment-floor" type="xs:integer"/>
+            <xs:element name="apartment-window-view" type="ObjectApartmentWindowView" minOccurs="0"/>
+          </xs:all>
+    </xs:complexType>
 </xs:element>
 ```
 
