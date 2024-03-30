@@ -1,4 +1,4 @@
-# Фиды жилых объектов в новостройках
+# Фиды жилых объектов (вторичный рынок)
 
 
 ## Описание элементов
@@ -7,7 +7,7 @@
 |Элемент                                   |Обязательно для заполнения|Тип данных  |Описание и значения                                                                                                                                                                                                                                                                                                                                                                                                        |
 |------------------------------------------|--------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |sku                                       |да                        |String      |Внешний идентификатор объекта                                                                                                                                                                                                                                                                                                                                                                                              |
-|category                                  |да                        |SingleSelect|Категория объекта<br/>- **new-buildings**                                                                                                                                                                                                                                                                                                                                                                                  |
+|category                                  |да                        |SingleSelect|Категория объекта<br/>- **aftermarket**                                                                                                                                                                                                                                                                                                                                                                                  |
 |sub-category                              |да                        |SingleSelect|Под-категория или тип объекта<br/>- **apartment**: квартира<br/>- **house**: дом                                                                                                                                                                                                                                                                                                                                    |
 |title                                     |да                        |String      |Заголовок, будет отображаться на карточке объекта                                                                                                                                                                                                                                                                                                                                                                          |
 |description                               |нет                       |String      |Описание объекта. Поддерживается разметка MARKDOWN.                                                                                                                                                                                                                                                                                                                                                                        |
@@ -18,14 +18,14 @@
 |location.address                          |да                        |String      |Адрес объекта                                                                                                                                                                                                                                                                                                                                                                                                              |
 |location.precise-location                 |нет                       |Boolean     |\- **true**: местоположение объекта на карте будет точным<br/>- **false**: местоположение объекта на карте будет приблизительным.<br/>Значение по умолчанию: `true`                                                                                                                                                                                                                                                            |
 |deal.price                                |да                        |Integer     |Цена объекта в UZS                                                                                                                                                                                                                                                                                                                                                                                                         |
-|deal.new-deal-status                      |нет                       |SingleSelect|Тип сделки<br/>- **primary** (Первичная продажа)<br/>- **direct** (Прямая продажа)<br/>- **reassignment** (Переуступка)                                                                                                                                                                                                                                                                                          |
+|deal.aftermarket-deal-status              |нет                       |SingleSelect|Тип сделки<br/>- **primary** (Первичная продажа)<br/>- **direct** (Прямая продажа)<br/>- **counter-sale** (Встречная продажа)                                                                                                                                                                                                                                                                                          |
 |deal.mortgage                             |нет                       |Boolean     |Доступна ипотека                                                                                                                                                                                                                                                                                                                                                                                                           |
 |deal.discount                             |нет                       |Boolean     |Наличие скидки                                                                                                                                                                                                                                                                                                                                                                                                             |
 |deal.haggle                               |нет                       |Boolean     |Возможен торг                                                                                                                                                                                                                                                                                                                                                                                                              |
 |object.rooms                              |да                        |SingleSelect|Кол-во комнат<br/>- **1** (1)<br/>- **2** (2)<br/>- **3** (3)<br/>- **4** (4)<br/>- **5-and-more** (больше четырех)                                                                                                                                                                                                                                                                                        |
 |object.total-space                        |да                        |Decimal     |Общая площадь                                                                                                                                                                                                                                                                                                                                                                                                              |
 |object.kitchen-space                      |нет                       |Decimal     |Площадь кухни                                                                                                                                                                                                                                                                                                                                                                                                              |
-|object.new-renovation                     |да                        |SingleSelect|Ремонт<br/>- **fine** (Чистовая отделка)<br/>- **turnkey** (Под ключ)<br/>- **rough** (Черновая отделка)                                                                                                                                                                                                                                                                                                         |
+|object.aftermarket-renovation             |да                        |SingleSelect|Ремонт<br/>- **euro** (евроремонт)<br/>- **redecorating** (косметический)<br/>- **designer** (дизайнерский)<br/>- **without** (требует ремонта)                                                                                                                                                                                                                                                                                                         |
 |object.bathroom                           |да                        |SingleSelect|Санузел<br/>- **combined** (Совмещенный)<br/>- **separated** (Раздельный)<br/>- **2** (2)<br/>- **3** (3)<br/>- **4-and-more** (больше трех)                                                                                                                                                                                                                                                               |
 |object.balcony                            |нет                       |MultiSelect |Балкон<br/>- **balcony** (Балкон)<br/>- **loggia** (Лоджия)<br/>- **terrace** (Терраса)                                                                                                                                                                                                                                                                                                                          |
 |object.apartment.apartment-floor          |да                        |Integer     |Этаж<br/>Только если `sub-category = apartment`                                                                                                                                                                                                                                                                                                                                                                            |
@@ -34,9 +34,7 @@
 |object.house.house-lot-space              |да                        |Decimal     |Площадь участка<br/>Только если `sub-category = house`                                                                                                                                                                                                                                                                                                                                                                     |
 |building.housing-class                    |да                        |SingleSelect|Класс жилья<br/>- **economy** (Эконом)<br/>- **comfort** (Комфорт)<br/>- **comfort-plus** (Комфорт+)<br/>- **business** (Бизнес)<br/>- **elite** (Элитный)                                                                                                                                                                                                                                                 |
 |building.ceiling-height                   |да                        |Decimal     |Высота потолков                                                                                                                                                                                                                                                                                                                                                                                                            |
-|building.building-state                   |да                        |SingleSelect|Стадия строительства<br/>- **built** (Дом построен, но не сдан)<br/>- **hand-over** (Сдан в эксплуатацию)<br/>- **unfinished** (Строится)                                                                                                                                                                                                                                                                        |
 |building.built-date                       |да                        |Integer     |Год постройки                                                                                                                                                                                                                                                                                                                                                                                                              |
-|building.built-quarter                    |да                        |SingleSelect|Квартал сдачи<br/>- 1<br/>- 2<br/>- 3<br/>- 4                                                                                                                                                                                                                                                                                                                                                                 |
 |building.apartment.apartment-building-type|нет                       |SingleSelect|Тип дома<br/>- **brick** (Кирпич)<br/>- **monolith** (Монолит)<br/>- **pane** (Панель)<br/>- **brick-monolith** (Кирпич-Монолит)<br/>- **concrete** (Бетон)<br/>Только если `sub-category = apartment`                                                                                                                                                                                                        |
 |building.apartment.apartment-floors-total |да                        |Integer     |Количество этажей<br/>Только если `sub-category = apartment`                                                                                                                                                                                                                                                                                                                                                                  |
 |building.house.house-type                 |да                        |SingleSelect|Дом<br/>- **full** (Отдельный дом)<br/>- **partial** (Часть дома)<br/>- **townhouse** (Таунхаус)<br/>- **duplex** (Дуплекс)<br/>Только если `sub-category = house`                                                                                                                                                                                                                                               |
@@ -49,10 +47,6 @@
 |facilities.house.house-facilities         |нет                       |MultiSelect |Удобства<br/>- **billiards** (Бильярд)<br/>- **sauna** (Сауна)<br/>- **pool** (Бассейн)<br/>- **kitchen** (Кухня)<br/>Только если `sub-category = house`                                                                                                                                                                                                                                                                                                  |
 |promotions.promotion-installment          |нет                       |Boolean     |Рассрочка                                                                                                                                                                                                                                                                                                                                                                                                                  |
 |promotions.promotion-trade-in             |нет                       |Boolean     |Трейд-ин                                                                                                                                                                                                                                                                                                                                                                                                                   |
-|promotions.promotion-parental-capital     |нет                       |Boolean     |Материнский капитал                                                                                                                                                                                                                                                                                                                                                                                                        |
-|promotions.promotion-start-of-sales       |нет                       |Boolean     |Старт продаж                                                                                                                                                                                                                                                                                                                                                                                                               |
-|promotions.promotion-key-issue            |нет                       |Boolean     |Выдача ключей                                                                                                                                                                                                                                                                                                                                                                                                              |
-|promotions.promotion-new-building         |нет                       |Boolean     |Новый корпус                                                                                                                                                                                                                                                                                                                                                                                                               |
 |promotions.promotion-cash-back            |нет                       |Boolean     |Кэшбэк                                                                                                                                                                                                                                                                                                                                                                                                                     |
 |promotions.promotion-special-prices       |нет                       |Boolean     |Специальные цены                                                                                                                                                                                                                                                                                                                                                                                                           |
 |contact.contact-sku                       |нет                       |String      |Внешний идентификатор закрепленного за объектом контакта для связи                                                                                                                                                                                                                                                                                                                                                         |
@@ -64,48 +58,45 @@
 ## Пример
 
 ```xml:
+<?xml version="1.0"?>
 <feed xmlns="http://penthauz.app/feed" version="1.0">
     <row>
-        <sku>house1</sku>
-        <category>new-buildings</category>
+        <sku>house1_sku</sku>
+        <category>aftermarket</category>
         <sub-category>house</sub-category>
-        <title>Spacious Family Home</title>
-        <description>A beautiful family home with ample space.</description>
+        <title>Beautiful House with Garden</title>
+        <description>A spacious house with a lovely garden</description>
         <images>
             <url>image1.jpg</url>
             <url>image2.jpg</url>
         </images>
         <location>
-            <latitude>51.5074</latitude>
-            <longitude>0.1278</longitude>
-            <address>123 Main Street</address>
+            <latitude>40.7128</latitude>
+            <longitude>-74.0060</longitude>
+            <address>123 Main St, Anytown, USA</address>
             <precise-location>true</precise-location>
         </location>
         <deal>
             <price>500000</price>
-            <new-deal-status>primary</new-deal-status>
-            <mortgage>true</mortgage>
-            <discount>false</discount>
-            <haggle>true</haggle>
+            <aftermarket-deal-status>primary</aftermarket-deal-status>
         </deal>
         <object>
             <rooms>5-and-more</rooms>
-            <total-space>300.5</total-space>
-            <new-renovation>fine</new-renovation>
+            <total-space>300.50</total-space>
+            <aftermarket-renovation>euro</aftermarket-renovation>
             <bathroom>3</bathroom>
-            <balcony>terrace</balcony>
             <house>
                 <house-floors-count>2</house-floors-count>
-                <house-lot-space>500</house-lot-space>
+                <house-lot-space>600.75</house-lot-space>
             </house>
         </object>
         <building>
             <housing-class>comfort</housing-class>
-            <ceiling-height>2.5</ceiling-height>
-            <building-state>built</building-state>
-            <built-date>2022</built-date>
+            <ceiling-height>10.5</ceiling-height>
+            <built-date>2005</built-date>
             <house>
                 <house-type>full</house-type>
+                <house-building-type>brick</house-building-type>
             </house>
         </building>
         <facilities>
@@ -116,85 +107,70 @@
             </house>
         </facilities>
         <promotions>
-            <promotion-installment>false</promotion-installment>
-            <promotion-trade-in>true</promotion-trade-in>
-            <promotion-parental-capital>false</promotion-parental-capital>
-            <promotion-start-of-sales>false</promotion-start-of-sales>
-            <promotion-key-issue>true</promotion-key-issue>
-            <promotion-new-building>false</promotion-new-building>
-            <promotion-cash-back>true</promotion-cash-back>
-            <promotion-special-prices>false</promotion-special-prices>
+            <promotion-installment>true</promotion-installment>
+            <promotion-special-prices>true</promotion-special-prices>
         </promotions>
         <contact>
-            <contact-sku>contact1</contact-sku>
+            <contact-sku>house1_contact_sku</contact-sku>
             <contact-name>John Doe</contact-name>
             <contact-phone>123-456-7890</contact-phone>
+            <contact-telegram>@john_doe</contact-telegram>
         </contact>
     </row>
     <row>
-        <sku>apartment1</sku>
-        <category>new-buildings</category>
+        <sku>apartment1_sku</sku>
+        <category>aftermarket</category>
         <sub-category>apartment</sub-category>
-        <title>Modern City Apartment</title>
-        <description>A contemporary apartment in the heart of the city.</description>
+        <title>Modern Apartment in City Center</title>
+        <description>A sleek and modern apartment in the heart of the city</description>
         <images>
-            <url>image3.jpg</url>
-            <url>image4.jpg</url>
+            <url>image5.jpg</url>
+            <url>image6.jpg</url>
         </images>
         <location>
-            <latitude>40.7128</latitude>
-            <longitude>-74.0060</longitude>
-            <address>456 Elm Street</address>
+            <latitude>34.0522</latitude>
+            <longitude>-118.2437</longitude>
+            <address>789 Elm St, Downtown, USA</address>
             <precise-location>true</precise-location>
         </location>
         <deal>
-            <price>300000</price>
-            <new-deal-status>direct</new-deal-status>
-            <mortgage>true</mortgage>
-            <discount>true</discount>
-            <haggle>false</haggle>
+            <price>200000</price>
+            <aftermarket-deal-status>primary</aftermarket-deal-status>
         </deal>
         <object>
             <rooms>2</rooms>
-            <total-space>100</total-space>
-            <new-renovation>turnkey</new-renovation>
+            <total-space>100.75</total-space>
+            <aftermarket-renovation>euro</aftermarket-renovation>
             <bathroom>combined</bathroom>
-            <balcony>balcony</balcony>
             <apartment>
                 <apartment-floor>5</apartment-floor>
                 <apartment-window-view>street</apartment-window-view>
             </apartment>
         </object>
         <building>
-            <housing-class>elite</housing-class>
-            <ceiling-height>3.0</ceiling-height>
-            <building-state>hand-over</building-state>
-            <built-date>2020</built-date>
+            <housing-class>comfort</housing-class>
+            <ceiling-height>9.0</ceiling-height>
+            <built-date>2010</built-date>
             <apartment>
                 <apartment-building-type>monolith</apartment-building-type>
-                <apartment-floors-total>20</apartment-floors-total>
+                <apartment-floors-total>10</apartment-floors-total>
             </apartment>
         </building>
         <facilities>
             <apartment>
-                <apartment-parking>underground</apartment-parking>
-                <apartment-facilities>internet</apartment-facilities>
+                <apartment-parking>open</apartment-parking>
+                <apartment-facilities>internet elevator</apartment-facilities>
             </apartment>
         </facilities>
         <promotions>
-            <promotion-installment>true</promotion-installment>
-            <promotion-trade-in>false</promotion-trade-in>
-            <promotion-parental-capital>true</promotion-parental-capital>
-            <promotion-start-of-sales>true</promotion-start-of-sales>
-            <promotion-key-issue>false</promotion-key-issue>
-            <promotion-new-building>true</promotion-new-building>
-            <promotion-cash-back>false</promotion-cash-back>
-            <promotion-special-prices>true</promotion-special-prices>
+            <promotion-trade-in>true</promotion-trade-in>
+            <promotion-cash-back>true</promotion-cash-back>
         </promotions>
         <contact>
-            <contact-sku>contact2</contact-sku>
-            <contact-name>Jane Smith</contact-name>
-            <contact-telegram>@janesmith</contact-telegram>
+            <contact-sku>apartment1_contact_sku</contact-sku>
+            <contact-name>Michael Johnson</contact-name>
+            <contact-phone>555-123-4567</contact-phone>
+            <contact-telegram>@michael_j</contact-telegram>
         </contact>
     </row>
 </feed>
@@ -202,6 +178,6 @@
 
 ## Файлы для скачивания
 
-[Схема данных](schemes/feed-new-buildings-scheme.xml)
+[Схема данных](schemes/feed-aftermarket-scheme.xml)
 
-[Пример](examples/feed-new-buildings-example.xml)
+[Пример](examples/feed-aftermarket-example.xml)
